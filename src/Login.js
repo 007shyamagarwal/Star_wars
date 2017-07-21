@@ -5,8 +5,9 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import './main.css';
+import './search.css';
 import Search from './search.js';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link ,Redirect} from 'react-router-dom';
 class Login extends Component {
 
 isLoggedIn = 'false';
@@ -16,19 +17,66 @@ constructor(props){
   this.state={
   username:'',
   password:'',
- // isLoggedIn:'true',
   }
  }
+
+
+handleClick(event){
+ var apiBaseUrl ="http://swapi.co/api/people/";
+ var url=apiBaseUrl+"?search="+this.state.username;
+ var username=this.state.username;
+ var password=this.state.password;
+ var self=this;
+ axios.get(url)
+   .then(function (response) {
+       console.log(response);
+         if(response.data.count==1){
+             console.log("got in ");
+             if((username==response.data.results[0].name) &&
+                         (password==response.data.results[0].birth_year))
+                    {
+                        console.log("Login successfull");
+                        alert("you have successfully logged in ");
+                        self.isLoggedIn=true;
+                        sessionStorage.setItem("loggedIn",true);
+                        self.setState();
+                        console.log("hey "+ self.isLoggedIn);
+                    } 
+
+              else 
+                    {
+                        alert("UserName of Password incorrect ");
+                    }
+
+        }
+        else{
+            console.log("Username does not exists");
+            alert("Username does not exist");
+        }
+   })
+    .catch(function (error) {
+            console.log(error);
+    });
+
+
+      console.log("jjjjjjj"+this.isLoggedIn);
+ }
+
+
 render() {
+  const isAlreadyAuthenticated=sessionStorage.getItem("loggedIn");
+//  console.log("hey already authenticated"+isAlreadyAuthenticated);
+
     return (
       <div>
-          
+              {isAlreadyAuthenticated ? <Redirect to={{ pathname: '/search'}}/>:(
+        <div>        
         <MuiThemeProvider>
           <div>
           <AppBar
              title="Star Wars Login Page"
            />
-           <div class="xyz">
+             <br/>
            <TextField
             inputstyle={{textAlign: 'center',}}
              hintText="Enter your Username"
@@ -43,59 +91,14 @@ render() {
                onChange = {(event,newValue) => this.setState({password:newValue})}
                />
              <br/>
-             </div>
+             <br/>
              <RaisedButton label="Submit" primary={true}  onClick={(event) => this.handleClick(event)}/>
          </div>
          </MuiThemeProvider>
+         </div>)}
       </div>
     );
   }
-
-
-handleClick(event){
- var apiBaseUrl ="http://swapi.co/api/people/";
- //var self = this;
- var url=apiBaseUrl+"?search="+this.state.username;
- //console.log(url);
- var username=this.state.username;
- var password=this.state.password;
- //var isLoggedIn=this.state.isLoggedIn;
- axios.get(url)
- .then(function (response) {
- //console.log("hey shyam");
- //console.log(response.data.results[0].name);
- console.log(response);
- //console.log(response.status+"hey");
- if(response.data.count==1){
-     console.log("got in ");
-    if((username==response.data.results[0].name) &&
-         (password==response.data.results[0].birth_year))
- {
- console.log("Login successfull");
- alert("you have successfully logged in ");
- this.isLoggedIn=true;
- console.log("hey "+ this.isLoggedIn);
-} 
-
-    else 
-    {
-        alert("UserName of Password incorrect ");
-    }
-
-}
- else{
- console.log("Username does not exists");
- alert("Username does not exist");
- }
- })
- .catch(function (error) {
- console.log(error);
-});
-
-
-console.log("jjjjjjj"+this.isLoggedIn);
- }
-
 
 
 

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import _ from 'lodash';
+import './search.css';
 class Search extends Component
 {
     constructor(){
@@ -49,15 +50,22 @@ class Search extends Component
     {
         var planets=
         _.map(this.state.planets, (planet) =>{
-            return <li>{planet.name}</li>;
+            let x=Math.log(planet.population);
+            console.log(x);
+
+            return <li style={{ height:(x*1.5)}}>{planet.name}</li>;
         });
         return(
+            <div >
             <div> 
-                <input  ref="query" onChange = { (e) =>  {   this.updateSearch() ; }}type='text'  />
-                <ul>{planets}</ul>
+                <input className="searchbox" ref="query" onChange = { (e) =>  {   this.updateSearch() ; }}type='text'  />
+               <br/>
+               <br/>
+
+               <div> <ul className="ul">{planets}</ul></div>
             </div>
 
-
+                </div>
         );
     }
 }

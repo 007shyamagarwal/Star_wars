@@ -1,0 +1,42 @@
+
+.mainSearch{
+    background-color: blueviolet;
+}
+.searchbox{
+    margin-left: 40%;
+    margin-right: 40%;
+    height: 30px;
+    
+}
+
+.search{
+    background-color: rebeccapurple;
+
+    height: 100%;
+    margin-bottom: 5%;
+}
+
+.ul {
+    background: #3399ff;
+    padding: 20px;
+    text-align: center;
+     border: 1px solid #ddd;
+    list-style-type: none;
+   
+}
+
+.ul li{
+    background: #cce5ff;
+    margin: 1px;
+      padding: 8px 16px;
+    border-bottom: 1px solid #ddd;
+   align-items: center;
+   margin-left: 25%;
+   margin-right: 20%;
+}
+
+.ul li:hover{
+    color:white;
+     background-color:#EAEAEA;
+ 
+}

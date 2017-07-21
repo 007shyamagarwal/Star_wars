@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import Search from './search';
 import registerServiceWorker from './registerServiceWorker';
-
-ReactDOM.render(<App />, document.getElementById('root'));
+import { BrowserRouter, Route, Link } from 'react-router-dom';
+import Login from './Login';
+ReactDOM.render(<App/>, document.getElementById('root'));
 //ReactDOM.render(<Content />,document.getElementById('content'));
 registerServiceWorker();
