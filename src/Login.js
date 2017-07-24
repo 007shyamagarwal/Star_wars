@@ -39,6 +39,7 @@ handleClick(event){
                         alert("you have successfully logged in ");
                         self.isLoggedIn=true;
                         sessionStorage.setItem("loggedIn",true);
+                        sessionStorage.setItem("UserName":username);
                         self.setState();
                         console.log("hey "+ self.isLoggedIn);
                     } 
@@ -76,7 +77,8 @@ render() {
           <AppBar
              title="Star Wars Login Page"
            />
-             <br/>
+           
+
            <TextField
             inputstyle={{textAlign: 'center',}}
              hintText="Enter your Username"
