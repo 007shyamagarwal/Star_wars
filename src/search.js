@@ -3,11 +3,14 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import './search.css';
 import { BrowserRouter, Route, Link ,Redirect} from 'react-router-dom';
+
+let counter=0;
+
 class Search extends Component
 {
 
-    counter=0;
-    start_time=Date.now();
+        pristine=true;
+   // start_time=Date.now();
     constructor(){
             super();
             this.state={
@@ -21,25 +24,43 @@ class Search extends Component
           this.search();
             
     }
+    resetCounter(){
+            counter=0;
+    }
 
     updateSearch(){
-        this.search(this.refs.query.value);
+       
+    let username=sessionStorage.getItem("UserName");
+          if(username=="Luke Skywalker")
+                this.search(this.refs.query.value);
+        else {
+         if(this.pristine){
+        setInterval(this.resetCounter,60000);
+        this.pristine=false;
+    }
 
+    console.log("counter is"+ counter);
+       // let endTime=Date.now();
+        //let diff=endTime-this.start_time;
+         //console.log("time diff is "+ diff);
+           // console.log("counter is"+ this.counter);
+            if(counter>15){
+                //setTimeout(alert("you have excedded no of searches"),60000-diff);
+                alert("no of searches exceed")
+                    return;
+                //this.counter=0;
+              //  this.start_time=endTime;
+                
+            }
+
+            else
+            this.search(this.refs.query.value);
+
+        }
     }
 
 
     search(query=""){
-            let endTime=Date.now();
-            let diff=endTime-this.start_time;
-            let username=sessionStorage.getItem("UserName");
-            console.log("time diff is "+ diff);
-            console.log("counter is"+ this.counter);
-            if(this.counter>15 &&  endTime-this.start_time<30000){
-                setTimeout(alert("you have excedded no of searches"),60000-diff);
-                this.counter=0;
-                
-            }
-            else{
             var url=`http://swapi.co/api/planets/?search=${query}`;
             console.log(url);
             axios.get(url).then( response =>  {
@@ -59,7 +80,7 @@ class Search extends Component
                 console.log(error);
             });
 
-            this.counter++;}
+           counter++;
     }
 
     render()

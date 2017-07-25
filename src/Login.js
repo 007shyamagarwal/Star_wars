@@ -39,7 +39,7 @@ handleClick(event){
                         alert("you have successfully logged in ");
                         self.isLoggedIn=true;
                         sessionStorage.setItem("loggedIn",true);
-                        sessionStorage.setItem("UserName":username);
+                        sessionStorage.setItem("UserName",username);
                         self.setState();
                         console.log("hey "+ self.isLoggedIn);
                     } 
@@ -65,11 +65,12 @@ handleClick(event){
 
 
 render() {
-  const isAlreadyAuthenticated=sessionStorage.getItem("loggedIn");
+ let isAlreadyAuthenticated=sessionStorage.getItem("loggedIn");
 //  console.log("hey already authenticated"+isAlreadyAuthenticated);
 
     return (
       <div>
+        
               {isAlreadyAuthenticated ? <Redirect to={{ pathname: '/search'}}/>:(
         <div>        
         <MuiThemeProvider>
